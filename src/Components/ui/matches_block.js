@@ -1,7 +1,6 @@
 import React from 'react';
 
 const MatchesBlock = ( { match } ) => {
-	console.log( match )
 	return (
 		<div className="match_block">
 			<div className="match_date">{ match.final === 'No' ? `To be played: ${ match.date }` : match.date }</div>
