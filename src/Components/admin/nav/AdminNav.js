@@ -8,7 +8,7 @@ const AdminNav = () => {
 		{ title: 'Matches', linkTo: '/admin_matches' },
 		{ title: 'Add Match', linkTo: '/admin_matches/edit_match' },
 		{ title: 'Players', linkTo: '/admin_players' },
-		{ title: 'Add Players', linkTo: '/admin_players/add_player' }
+		{ title: 'Add Players', linkTo: '/admin_players/add_players' }
 	];
 
 	const style = {
