@@ -197,12 +197,12 @@ class addEditMatch extends Component {
 			}
 		}
 
-		this.setState({
+		this.setState( {
 			matchId,
 			formType: type,
 			formdata: newFormData,
 			teams
-		});
+		} );
 	}
 
 	componentDidMount() {
@@ -217,21 +217,77 @@ class addEditMatch extends Component {
 						key: childSnapshot.val().shortName,
 						value: childSnapshot.val().shortName
 					} );
-				} )
+				} );
 
 				this.updateFields( match, teamOptions, teams, type, matchId )
-			} )
+			} );
 		}
 
 		if ( !matchId ) {
-			//add match
+
+			getTeams( false, 'Add Match' )
+
 		} else {
 			firebaseDB.ref( `matches/${ matchId }` ).once( 'value' )
 				.then( snapshot => {
 					const match = snapshot.val();
 
 					getTeams( match, 'Edit Match' )
-				} )
+				} );
+		}
+	}
+
+	successForm( message ) {
+		this.setState( {
+			formSuccess: message
+		} );
+
+		setTimeout( () => {
+			this.setState( {
+				formSuccess: ''
+			} );
+		}, 2000 )
+	}
+
+
+	submitForm = ( e ) => {
+		e.preventDefault();
+
+		let dataToSubmit = {};
+		let formIsValid = true;
+
+		for ( let key in this.state.formdata ) {
+			dataToSubmit[ key ] = this.state.formdata[ key ].value;
+			formIsValid = this.state.formdata[ key ].valid && formIsValid; // to compare with previous iteration
+		}
+
+		this.state.teams.forEach( team => {
+			if ( team.shortName === dataToSubmit.local ) {
+				dataToSubmit[ 'localThmb' ] = team.thmb
+			}
+			if ( team.shortName === dataToSubmit.away ) {
+				dataToSubmit[ 'awayThmb' ] = team.thmb
+			}
+		} );
+
+		if ( formIsValid ) {
+			if ( this.state.formType === 'Edit Match' ) {
+				firebaseDB.ref( `matches${ this.state.matchId }` )
+					.update( dataToSubmit ).then( () => {
+						this.successForm( 'Updated correctly' );
+					} ).catch( ( e ) => this.setState( { formError: true } ) );
+			} else {
+				firebaseMatches.push( dataToSubmit ).then( () => {
+					this.props.history.push('/admin_matches');
+				} ).catch( e => {
+					this.setState( { formError: true } )
+				} );
+			}
+
+		} else {
+			this.setState( {
+				formError: true
+			} );
 		}
 	}
 
@@ -262,7 +318,7 @@ class addEditMatch extends Component {
 								<div className="label_inputs">Away</div>
 								<div className="wrapper">
 									<div className="left">
-										<FormField id={ 'away' } formdata={ this.state.formdata.local } change={ element => this.updateForm( element ) } />
+										<FormField id={ 'away' } formdata={ this.state.formdata.away } change={ element => this.updateForm( element ) } />
 									</div>
 									<div>
 										<FormField id={ 'resultAway' } formdata={ this.state.formdata.resultAway } change={ element => this.updateForm( element ) } />

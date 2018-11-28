@@ -7,7 +7,7 @@ const Footer = () => {
 			<div className="footer_logo">
 				<CityLogo width="70px" height="70px" link="true" linkTo="/" />
 			</div>
-			<div className="footer_discl">Manchester city 2018. Developed by Marija. All rights reserved.</div>
+			<div className="footer_discl">Manchester city 2018. Developed by <a href="mailto:marija@lynxdev.io">Marija</a></div>
 		</footer>
 	)
 }
