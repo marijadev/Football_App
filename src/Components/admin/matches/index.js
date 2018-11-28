@@ -2,15 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../../HOC/AdminLayout';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { Table, TableCell, TableBody, TableHead, TableRow, Paper } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// import { Table, TableCell, TableBody, TableHead, TableRow, Paper } from '@material-ui/core';
 import { firebaseMatches } from '../../../firebase';
 import { firebaseLooper } from '../../ui/misc';
 
@@ -43,23 +37,22 @@ class AdminMatches extends Component {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{
-									this.state.matches ?
-										this.state.matches.map( ( match, i ) => (
-											<TableRow key={ i }>
-												<TableCell>{ match.date }</TableCell>
-												<TableCell>
-													<Link to={ `admin_matches/edit_match/${ match.id }` }>{ match.away } - { match.local }</Link>
-												</TableCell>
-												<TableCell>{ match.resultAway } - { match.resultLocal }</TableCell>
-												<TableCell>
-													{ match.final === 'Yes' ?
-														<span className="matches_tag_red">Final</span> : <span className="matches_tag_green">Not played yet</span>
-													}
-												</TableCell>
-											</TableRow>
-										) )
-										: null
+								{ this.state.matches ?
+									this.state.matches.map( ( match, i ) => (
+										<TableRow key={ i }>
+											<TableCell>{ match.date }</TableCell>
+											<TableCell>
+												<Link style={{textDecoration: 'underline'}} to={ `admin_matches/edit_match/${ match.id }` }>{ match.away } - { match.local }</Link>
+											</TableCell>
+											<TableCell>{ match.resultAway } - { match.resultLocal }</TableCell>
+											<TableCell>
+												{ match.final === 'Yes' ?
+													<span className="matches_tag_red">Final</span> : <span className="matches_tag_green">Not played yet</span>
+												}
+											</TableCell>
+										</TableRow>
+									) )
+									: null
 								}
 							</TableBody>
 						</Table>
