@@ -3,10 +3,9 @@ import PlayerCard from '../ui/playerCard';
 import Fade from 'react-reveal/Fade';
 
 import Stripes from '../../Resources/images/stripes.png';
-import { firebasePalyers, firebase, firebasePlayers } from '../../firebase';
+import { firebase, firebasePlayers } from '../../firebase';
 import { firebaseLooper } from '../ui/misc';
 import { Promise } from 'core-js';
-import { SvgIcon } from '@material-ui/core';
 
 class TheTeam extends Component {
 	state = {
