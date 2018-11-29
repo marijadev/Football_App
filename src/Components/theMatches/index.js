@@ -33,22 +33,24 @@ class TheMatches extends Component {
 		const list = this.state.matches.filter( match => {
 			return match.final === played
 		} );
+
 		this.setState( {
 			filterMatches: played === 'All' ? this.state.matches : list,
 			playedFilter: played,
 			resultFilter: 'All'
-		} )
+		} );
 	}
 
 	showResult = result => {
 		const list = this.state.matches.filter( match => {
 			return match.result === result
 		} );
+		
 		this.setState( {
 			filterMatches: result === 'All' ? this.state.matches : list,
 			playedFilter: 'All',
 			resultFilter: result
-		} )
+		} );
 	}
 
 
